@@ -26,28 +26,10 @@ export default function RootLayout({
             __html: `
               var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
               
-              Tawk_API.customStyle = {
-                visibility : {
-                  desktop : {
-                    position : 'br',
-                    xOffset : 20,
-                    yOffset : 20
-                  },
-                  mobile : {
-                    position : 'br',
-                    xOffset : 10,
-                    yOffset : 10
-                  }
-                }
-              };
-              
               Tawk_API.onLoad = function(){
-                // Maximize chat to skip welcome screen and open directly
-                Tawk_API.maximize();
-                
-                // Remove all greeting bubbles and suggestion messages
                 var style = document.createElement('style');
                 style.innerHTML = \`
+                  /* Remove greeting bubbles and suggestion messages */
                   #tawk-bubble-container,
                   .tawk-bubble,
                   .tawk-attention-grabber,
@@ -60,22 +42,49 @@ export default function RootLayout({
                     visibility: hidden !important;
                     opacity: 0 !important;
                   }
+                  
+                  /* Mobile popup styling - only when maximized */
+                  @media (max-width: 768px) {
+                    .tawk-max-container {
+                      position: fixed !important;
+                      bottom: 20px !important;
+                      right: 10px !important;
+                      left: 10px !important;
+                      width: calc(100vw - 20px) !important;
+                      max-width: 350px !important;
+                      height: 450px !important;
+                      max-height: calc(100vh - 100px) !important;
+                      border-radius: 12px !important;
+                      box-shadow: 0 8px 32px rgba(0,0,0,0.3) !important;
+                      z-index: 999999 !important;
+                      margin: 0 auto !important;
+                    }
+                    
+                    .tawk-max-container iframe {
+                      border-radius: 12px !important;
+                    }
+                  }
+                  
+                  /* Desktop popup styling - only when maximized */
+                  @media (min-width: 769px) {
+                    .tawk-max-container {
+                      position: fixed !important;
+                      bottom: 80px !important;
+                      right: 20px !important;
+                      width: 380px !important;
+                      height: 500px !important;
+                      border-radius: 12px !important;
+                      box-shadow: 0 8px 32px rgba(0,0,0,0.3) !important;
+                    }
+                  }
+                  
+                  /* Keep minimized widget small */
+                  .tawk-min-container {
+                    width: 60px !important;
+                    height: 60px !important;
+                  }
                 \`;
                 document.head.appendChild(style);
-                
-                // Disable all Tawk.to popups and messages
-                if(typeof Tawk_API.setAttributes === 'function') {
-                  Tawk_API.setAttributes({
-                    'name': '',
-                    'email': '',
-                    'hash': ''
-                  }, false);
-                }
-              };
-              
-              Tawk_API.onChatStarted = function(){
-                // Keep chat maximized to avoid welcome screen
-                Tawk_API.maximize();
               };
               
               (function(){
