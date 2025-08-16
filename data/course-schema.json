@@ -1,0 +1,138 @@
+{
+  "courseSchema": {
+    "required": ["id", "title", "price", "categoryId", "description", "instructor", "level"],
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "Unique identifier for the course",
+        "pattern": "^c[0-9]+$"
+      },
+      "title": {
+        "type": "string",
+        "minLength": 10,
+        "maxLength": 100,
+        "description": "Course title"
+      },
+      "price": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 999.99,
+        "description": "Course price in USD"
+      },
+      "imageUrl": {
+        "type": "string",
+        "description": "Course thumbnail image URL"
+      },
+      "categoryId": {
+        "type": "string",
+        "description": "Category identifier"
+      },
+      "description": {
+        "type": "string",
+        "minLength": 50,
+        "maxLength": 500,
+        "description": "Course description"
+      },
+      "instructor": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 50,
+        "description": "Instructor name"
+      },
+      "duration": {
+        "type": "string",
+        "description": "Course duration (e.g., '8 minggu')"
+      },
+      "level": {
+        "type": "string",
+        "enum": ["Easy", "Medium", "Hard"],
+        "description": "Course difficulty level"
+      },
+      "rating": {
+        "type": "number",
+        "minimum": 1,
+        "maximum": 5,
+        "description": "Course rating (1-5)"
+      },
+      "students": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Number of enrolled students"
+      },
+      "capitalCost": {
+        "type": "string",
+        "enum": ["Tanpa Modal", "Modal Kecil", "Modal Sedang", "Modal Besar"],
+        "description": "Required capital category"
+      },
+      "capitalAmount": {
+        "type": "string",
+        "description": "Required capital amount range"
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Course tags for search and filtering"
+      },
+      "featured": {
+        "type": "boolean",
+        "description": "Whether course is featured"
+      },
+      "status": {
+        "type": "string",
+        "enum": ["active", "inactive", "draft"],
+        "description": "Course status"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date",
+        "description": "Course creation date"
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date",
+        "description": "Last update date"
+      }
+    }
+  },
+  "categorySchema": {
+    "required": ["id", "name", "icon"],
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "Unique category identifier"
+      },
+      "name": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 30,
+        "description": "Category name"
+      },
+      "icon": {
+        "type": "string",
+        "description": "Lucide icon name"
+      },
+      "description": {
+        "type": "string",
+        "maxLength": 100,
+        "description": "Category description"
+      },
+      "color": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}$",
+        "description": "Category color in hex format"
+      },
+      "order": {
+        "type": "integer",
+        "minimum": 1,
+        "description": "Display order"
+      },
+      "status": {
+        "type": "string",
+        "enum": ["active", "inactive"],
+        "description": "Category status"
+      }
+    }
+  }
+}

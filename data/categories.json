@@ -1,0 +1,101 @@
+{
+  "mainCategories": [
+    {
+      "id": "popular",
+      "name": "Populer",
+      "icon": "Star",
+      "description": "Kursus paling diminati",
+      "color": "#FFD700",
+      "order": 1,
+      "status": "active"
+    },
+    {
+      "id": "web-development",
+      "name": "Web Development",
+      "icon": "Code",
+      "description": "Pengembangan website dan aplikasi web",
+      "color": "#3B82F6",
+      "order": 2,
+      "status": "active"
+    },
+    {
+      "id": "digital-marketing",
+      "name": "Digital Marketing",
+      "icon": "TrendingUp",
+      "description": "Strategi pemasaran digital",
+      "color": "#10B981",
+      "order": 3,
+      "status": "active"
+    },
+    {
+      "id": "design-services",
+      "name": "Design Services",
+      "icon": "Palette",
+      "description": "Layanan desain grafis dan UI/UX",
+      "color": "#F59E0B",
+      "order": 4,
+      "status": "active"
+    },
+    {
+      "id": "more",
+      "name": "Lainnya",
+      "icon": "MoreHorizontal",
+      "description": "Kategori lainnya",
+      "color": "#6B7280",
+      "order": 5,
+      "status": "active"
+    }
+  ],
+  "additionalCategories": [
+    {
+      "id": "mobile-apps",
+      "name": "Mobile Apps",
+      "icon": "Smartphone",
+      "description": "Pengembangan aplikasi mobile",
+      "color": "#8B5CF6",
+      "order": 6,
+      "status": "active"
+    },
+    {
+      "id": "e-commerce",
+      "name": "E-Commerce",
+      "icon": "ShoppingCart",
+      "description": "Bisnis perdagangan elektronik",
+      "color": "#EF4444",
+      "order": 7,
+      "status": "active"
+    },
+    {
+      "id": "consulting",
+      "name": "Consulting",
+      "icon": "Users",
+      "description": "Layanan konsultasi bisnis",
+      "color": "#06B6D4",
+      "order": 8,
+      "status": "active"
+    },
+    {
+      "id": "content-creation",
+      "name": "Content Creation",
+      "icon": "PenTool",
+      "description": "Pembuatan konten kreatif",
+      "color": "#F97316",
+      "order": 9,
+      "status": "active"
+    },
+    {
+      "id": "photography",
+      "name": "Photography",
+      "icon": "Camera",
+      "description": "Fotografi profesional",
+      "color": "#84CC16",
+      "order": 10,
+      "status": "active"
+    }
+  ],
+  "metadata": {
+    "totalCategories": 10,
+    "lastUpdated": "2024-01-22",
+    "version": "1.0.0"
+  }
+}
