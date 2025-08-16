@@ -26,22 +26,27 @@ export async function POST(request: NextRequest) {
     console.log("[v0] Callback received:", callbackData)
 
     // Proses berdasarkan status pembayaran
-    const { reference, status, amount, customer_name, customer_email } = callbackData
+    const { reference, status, amount, customer_name, customer_email, merchant_ref } = callbackData
 
     switch (status) {
       case "PAID":
         // Pembayaran berhasil
-        await handleSuccessfulPayment(reference, customer_email, amount)
+        await handleSuccessfulPayment(reference, merchant_ref, customer_email, amount)
         break
 
       case "EXPIRED":
         // Pembayaran expired
-        await handleExpiredPayment(reference)
+        await handleExpiredPayment(reference, merchant_ref)
         break
 
       case "FAILED":
         // Pembayaran gagal
-        await handleFailedPayment(reference)
+        await handleFailedPayment(reference, merchant_ref)
+        break
+
+      case "UNPAID":
+        // Pembayaran belum dibayar (status awal)
+        await handleUnpaidPayment(reference, merchant_ref)
         break
     }
 
@@ -54,40 +59,63 @@ export async function POST(request: NextRequest) {
 }
 
 // Fungsi handle pembayaran berhasil
-async function handleSuccessfulPayment(reference: string, email: string, amount: number) {
+async function handleSuccessfulPayment(reference: string, merchantRef: string, email: string, amount: number) {
   try {
+    console.log(
+      `[v0] ✅ Payment successful - Reference: ${reference}, Merchant Ref: ${merchantRef}, Email: ${email}, Amount: Rp ${amount.toLocaleString("id-ID")}`,
+    )
+
     // TODO: Update database - ubah status order jadi "paid"
     // TODO: Kirim email konfirmasi ke customer
-    // TODO: Buka akses kursus untuk user
-    // TODO: Log transaksi
+    // TODO: Buka akses kursus untuk user berdasarkan merchant_ref
+    // TODO: Log transaksi ke database
+    // TODO: Kirim notifikasi WhatsApp/SMS (optional)
 
-    console.log(`[v0] Payment successful: ${reference}, ${email}, ${amount}`)
-
-    // Contoh update database (sesuaikan dengan struktur database Anda)
-    // await updateOrderStatus(reference, 'paid')
-    // await grantCourseAccess(email, reference)
-    // await sendConfirmationEmail(email, reference)
+    // Contoh implementasi:
+    // const courseId = extractCourseIdFromMerchantRef(merchantRef)
+    // await updateOrderStatus(merchantRef, 'paid', reference)
+    // await grantCourseAccess(email, courseId)
+    // await sendConfirmationEmail(email, merchantRef, amount)
+    // await logTransaction(reference, merchantRef, 'success', amount)
   } catch (error) {
     console.error("[v0] Error handling successful payment:", error)
   }
 }
 
 // Fungsi handle pembayaran expired
-async function handleExpiredPayment(reference: string) {
+async function handleExpiredPayment(reference: string, merchantRef: string) {
   try {
+    console.log(`[v0] ⚠️ Payment expired - Reference: ${reference}, Merchant Ref: ${merchantRef}`)
+
     // TODO: Update status order jadi "expired"
-    console.log(`[v0] Payment expired: ${reference}`)
+    // TODO: Kirim email notifikasi expired (optional)
+    // await updateOrderStatus(merchantRef, 'expired', reference)
   } catch (error) {
     console.error("[v0] Error handling expired payment:", error)
   }
 }
 
 // Fungsi handle pembayaran gagal
-async function handleFailedPayment(reference: string) {
+async function handleFailedPayment(reference: string, merchantRef: string) {
   try {
+    console.log(`[v0] ❌ Payment failed - Reference: ${reference}, Merchant Ref: ${merchantRef}`)
+
     // TODO: Update status order jadi "failed"
-    console.log(`[v0] Payment failed: ${reference}`)
+    // TODO: Log reason kegagalan jika ada
+    // await updateOrderStatus(merchantRef, 'failed', reference)
   } catch (error) {
     console.error("[v0] Error handling failed payment:", error)
+  }
+}
+
+// Fungsi handle pembayaran belum dibayar
+async function handleUnpaidPayment(reference: string, merchantRef: string) {
+  try {
+    console.log(`[v0] 🔄 Payment pending - Reference: ${reference}, Merchant Ref: ${merchantRef}`)
+
+    // TODO: Update status order jadi "pending" atau "unpaid"
+    // await updateOrderStatus(merchantRef, 'pending', reference)
+  } catch (error) {
+    console.error("[v0] Error handling unpaid payment:", error)
   }
 }
