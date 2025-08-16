@@ -3,7 +3,7 @@
 import Image from "next/image"
 import type { Course } from "@/lib/data"
 import Link from "next/link"
-import { StarIcon, UsersIcon, ClockIcon } from "lucide-react"
+import { StarIcon, UsersIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useSearchParams } from "next/navigation"
 
@@ -46,12 +46,24 @@ export default function CourseCard({ course, source = "home" }: CourseCardProps)
     }
   }
 
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(price)
+  }
+
   return (
     <Link href={buildNavigationUrl()} className="block">
       <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full hover:shadow-lg transition-shadow duration-200">
         <div className="relative">
           <Image
-            src={course.imageUrl || "/placeholder.svg"}
+            src={
+              course.imageUrl ||
+              "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+            }
             alt={course.title}
             width={200}
             height={100}
@@ -68,7 +80,20 @@ export default function CourseCard({ course, source = "home" }: CourseCardProps)
         </div>
         <div className="p-2 flex flex-col flex-grow">
           <h3 className="text-xs font-semibold text-gray-800 line-clamp-2 mb-1 leading-tight">{course.title}</h3>
-          <p className="text-[0.6rem] text-gray-600 mb-2 truncate">by {course.instructor}</p>
+
+          <div className="mb-2">
+            <div className="flex items-center space-x-1">
+              <span className="text-sm font-bold text-green-600">{formatPrice(course.price)}</span>
+              {course.originalPrice && (
+                <span className="text-xs text-gray-500 line-through">{formatPrice(course.originalPrice)}</span>
+              )}
+            </div>
+            {course.originalPrice && (
+              <div className="text-[0.6rem] text-green-600 font-medium">
+                Hemat {Math.round(((course.originalPrice - course.price) / course.originalPrice) * 100)}%
+              </div>
+            )}
+          </div>
 
           <div className="flex items-center gap-1 text-[0.6rem] mt-auto">
             <div className="flex items-center gap-0.5">
@@ -79,11 +104,6 @@ export default function CourseCard({ course, source = "home" }: CourseCardProps)
             <div className="flex items-center gap-0.5">
               <UsersIcon className="h-2.5 w-2.5 text-gray-400" />
               <span className="text-gray-600">{(course.students / 1000).toFixed(0)}k</span>
-            </div>
-            <span className="text-gray-400">•</span>
-            <div className="flex items-center gap-0.5">
-              <ClockIcon className="h-2.5 w-2.5 text-gray-400" />
-              <span className="text-gray-600">{course.duration}</span>
             </div>
           </div>
         </div>
