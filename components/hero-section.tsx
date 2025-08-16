@@ -20,7 +20,7 @@ export default function HeroSection({ onLevelChange, onCapitalCostChange }: Hero
     <section className="relative w-full px-4 py-2 mt-0">
       <div className="relative w-full h-[180px] md:h-[250px] lg:h-[300px] overflow-hidden rounded-xl shadow-lg">
         <Image
-          src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+          src="/placeholder.svg?height=300&width=800&text=Bisnis+Digital+Terbaik"
           alt="Hero Banner - Platform Pembelajaran Bisnis Digital"
           layout="fill"
           objectFit="cover"

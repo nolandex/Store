@@ -12,10 +12,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     <Link href={`/products/${product.id}`} className="block">
       <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full hover:shadow-lg transition-shadow duration-200">
         <Image
-          src={
-            product.imageUrl ||
-            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-          }
+          src={product.imageUrl || "/placeholder.svg"}
           alt={product.name}
           width={300}
           height={120}

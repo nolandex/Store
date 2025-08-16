@@ -57,21 +57,6 @@ export default function CourseDetailPage({ params }: CourseDetailPageProps) {
     }, 500)
   }
 
-  const handlePayment = () => {
-    // This will be integrated with Tripay payment gateway
-    console.log("Initiating payment for course:", course?.id)
-    alert("Fitur pembayaran akan segera tersedia. Terima kasih!")
-  }
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price)
-  }
-
   const getBackNavigation = () => {
     if (fromPage === "my-courses") {
       return {
@@ -152,7 +137,7 @@ export default function CourseDetailPage({ params }: CourseDetailPageProps) {
         <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-sm overflow-hidden">
           <div className="relative">
             <Image
-              src={course.imageUrl || "/placeholder.svg?height=300&width=800&text=Course+Image"}
+              src={course.image || "/placeholder.svg?height=300&width=800&text=Course+Image"}
               alt={course.title}
               width={800}
               height={300}
@@ -166,29 +151,6 @@ export default function CourseDetailPage({ params }: CourseDetailPageProps) {
           </div>
 
           <div className="p-4 sm:p-6">
-            <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-4 mb-6 border border-green-200">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-2xl font-bold text-green-600">{formatPrice(course.price)}</span>
-                    {course.originalPrice && (
-                      <span className="text-lg text-gray-500 line-through">{formatPrice(course.originalPrice)}</span>
-                    )}
-                  </div>
-                  {course.originalPrice && (
-                    <div className="text-sm text-green-600 font-medium">
-                      Hemat {formatPrice(course.originalPrice - course.price)} (
-                      {Math.round(((course.originalPrice - course.price) / course.originalPrice) * 100)}%)
-                    </div>
-                  )}
-                </div>
-                <div className="text-right">
-                  <div className="text-xs text-gray-600 mb-1">Akses Selamanya</div>
-                  <div className="text-xs text-gray-600">Sertifikat Included</div>
-                </div>
-              </div>
-            </div>
-
             <div className="grid grid-cols-3 gap-3 text-center mb-6">
               <div className="flex flex-col items-center p-2 bg-gray-50 rounded-lg">
                 <Users className="w-4 h-4 text-gray-600 mb-1" />
@@ -204,19 +166,12 @@ export default function CourseDetailPage({ params }: CourseDetailPageProps) {
               </div>
             </div>
 
-            <div className="space-y-3 mb-6">
-              <Button
-                className="w-full py-3 font-medium bg-green-600 hover:bg-green-700 text-white transition-all duration-300"
-                onClick={handlePayment}
-              >
-                <div className="flex items-center justify-center space-x-2">
-                  <span>💳 Beli Sekarang - {formatPrice(course.price)}</span>
-                </div>
-              </Button>
-
+            <div className="mb-6">
               <Button
                 className={`w-full py-3 font-medium transition-all duration-300 ${
-                  isAdded ? "bg-red-500 hover:bg-red-600 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"
+                  isAdded
+                    ? "bg-red-500 hover:bg-red-600 text-white"
+                    : "bg-bisnovoBlue-500 hover:bg-bisnovoBlue-600 text-white"
                 }`}
                 onClick={handleToggleCourse}
                 disabled={isLoading}
@@ -230,10 +185,10 @@ export default function CourseDetailPage({ params }: CourseDetailPageProps) {
                   ) : isAdded ? (
                     <>
                       <Trash2 className="w-4 h-4" />
-                      <span>Hapus dari Wishlist</span>
+                      <span>Hapus dari Kelas Saya</span>
                     </>
                   ) : (
-                    <span>Tambah ke Wishlist</span>
+                    <span>Tambah ke Kelas Saya</span>
                   )}
                 </div>
               </Button>
